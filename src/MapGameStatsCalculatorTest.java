@@ -23,13 +23,28 @@ public class MapGameStatsCalculatorTest {
         + "Nupur 20\n"
         + "Baya 60\n"
         + "Nupur 30\n";
+    GameStatsCalculator 
+        //arrange
+        calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+        // Act
+        int actual = calculator.gameCount("Nupur");
+
+        // Assert
+        assertEquals(4, actual);
+  }
+  @Test
+  public void gameCountReturnsNumberOfGamesForOnePerson() {
+    // Arrange
+    String scoreData = "Zee 100\n";
+        // + "Zee 30\n"
+        // + "Zee 25\n"
+        // + "Zee 25\n";
     GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
-
     // Act
-    int actual = calculator.gameCount("Nupur");
-
+    int actual = calculator.gameCount("Zee");
     // Assert
-    assertEquals(4, actual);
+    assertEquals(1, actual);
   }
 
   @Test
