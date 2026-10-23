@@ -108,6 +108,20 @@ public class MapGameStatsCalculatorTest {
     // Assert
     assertEquals(40, actual);
   }
+  @Test
+  public void highScoreWithNegativeScores() {
+    // Arrange
+    String scoreData = "Zee -50\n"
+        + "Zee -20\n"
+        + "Zee -80\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    int actual = calculator.highScore("Zee");
+
+    // Assert
+    assertEquals(-20, actual);
+  }
 
   @Test
   public void highScoreThrowsNullPointerExceptionForNullPerson() {
