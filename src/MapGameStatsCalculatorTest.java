@@ -232,7 +232,7 @@ public class MapGameStatsCalculatorTest {
         + "Baya 60\n"
         + "Nupur 30\n";
     GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
-
+    
     // Act
     Executable act = () -> calculator.getAverageScore(null);
 
