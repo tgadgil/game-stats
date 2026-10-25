@@ -23,6 +23,9 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
 	private Map<String, Integer> scoreTotal;
 
 	// <<< Constructor >>> 
+	//IMPORTANT NOTE: I struggle to think while trying to talk to someone.
+	//For each method, we wrote pseudocode and the reconnected. 
+	//In some cases, we decided to go about different paths
 	public MapGameStatsCalculator(Scanner scoreInput) {
 		gameCounts = new HashMap<>();
 		highScores = new HashMap<>();
@@ -138,11 +141,27 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
 	 */
 	@Override
 	public String highestAverageScorer() {
-	// TODO: remove this exception once you have implemented your method!
-	throw new UnsupportedOperationException("Unimplemented method 'highestAverageScorer'");
-
-	// Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-	//checkScoreData();
+		checkScoreData();
+		String highestAverageScorer = "";
+		double avg = 0;
+		double highestAvg = 0;
+		boolean isFirst = false;
+		for(String name : scoreTotal.keySet()) {
+			avg = getAverageScore(name);
+			if (isFirst == false) {
+				highestAvg = getAverageScore(name);
+				highestAverageScorer = name;
+				isFirst = true;
+			} else if (highestAvg < avg){
+				highestAvg = avg;
+				highestAverageScorer = name;
+			} else if (highestAvg == avg) {
+				if (name.compareTo(highestAverageScorer) < 0) { 
+					highestAverageScorer = name;
+				}
+			}
+		}
+		return highestAverageScorer;
 	}
 
 	/**
