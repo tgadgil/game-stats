@@ -20,11 +20,13 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
 	private Map<String, Integer> gameCounts;
 		// For some waves you will need to add more private instance variables here!
 	private Map<String, Integer> highScores;
+	private Map<String, Integer> scoreTotal;
 
 	// <<< Constructor >>> 
 	public MapGameStatsCalculator(Scanner scoreInput) {
 		gameCounts = new HashMap<>();
 		highScores = new HashMap<>();
+		scoreTotal = new HashMap<>();
 
 		while(scoreInput.hasNext()) {
 			String name = scoreInput.next();
@@ -40,6 +42,13 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
 			} else if (highScores.get(name) < score) {
 				highScores.put(name, score);
 			}
+
+			if(!scoreTotal.containsKey(name)) {
+				scoreTotal.put(name, score);
+			} else {
+				scoreTotal.put(name, scoreTotal.get(name) + score);
+			}
+
 		}
 		scoreInput.close();
 	}
@@ -83,7 +92,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
 	public String highestScorer() {
 		checkScoreData();
 		String highestScorer = "";
-		int highestScore = -100000000;
+		int highestScore = -1000000000;
 		boolean firstScore = false;
 		for (String name : highScores.keySet()) {
     		int score = highScores.get(name);
@@ -95,15 +104,13 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
 				highestScore = score;
 				highestScorer = name;
 			} else if (highestScore == score) {
-            	if (name.compareTo(highestScorer) < 0) {
+            	if (name.compareTo(highestScorer) < 0) { 
+					//seems a bit unfair... should be 1st to score it, sets the record
                 highestScorer = name;
             	}
 			}
 		} return highestScorer;
 	}
-	// Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-	//checkScoreData();
-
 
 	/**
 	 * Returns the average score a person has gotten.
@@ -114,11 +121,10 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
 	 */
 	@Override
 	public double getAverageScore(String person) {
-	// TODO: remove this exception once you have implemented your method!
-	throw new UnsupportedOperationException("Unimplemented method 'getAverageScore'");
-
-	// Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-	//checkPerson(person);
+		//note: partner created a new List, for highestScore()
+		//after discussion, we decided to post the solution we each came up with.  
+		checkPerson(person);
+		return 1.0 * scoreTotal.get(person) / gameCounts.get(person);
 	}
 
 	/**
